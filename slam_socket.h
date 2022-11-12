@@ -15,6 +15,7 @@ public:
     SLAM_socket();
 
     QUdpSocket* UDP4ControlMSG;
+    QUdpSocket* UDP4PC;
     Crc* mCrc;
 
     void StartSystem();
@@ -24,6 +25,7 @@ public:
 
 public slots:
     void UDP4ControlMSGReadData();
+    void UDP4PCReadData();
     void Init();
 
     void SendHeartBag();

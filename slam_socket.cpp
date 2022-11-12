@@ -13,8 +13,11 @@ SLAM_socket::SLAM_socket()
 void SLAM_socket::Init()
 {
      UDP4ControlMSG=new QUdpSocket;
+     UDP4PC=new QUdpSocket;
      UDP4ControlMSG->bind(QHostAddress("192.168.194.77"),5100);
+     UDP4PC->bind(QHostAddress("192.168.194.77"),5400);
      connect(UDP4ControlMSG,SIGNAL(readyRead()),this,SLOT(UDP4ControlMSGReadData()));
+     connect(UDP4PC,SIGNAL(readyRead()),this,SLOT(UDP4PCReadData()));
      HeartBagTimer=new QTimer();
      connect(HeartBagTimer,SIGNAL(timeout()),this,SLOT(SendHeartBag()));
      HeartBagTimer->setInterval(1000);
@@ -105,6 +108,37 @@ void SLAM_socket::UDP4ControlMSGReadData()
 
        }
 }
+void SLAM_socket::UDP4PCReadData()
+{
+        QByteArray ba;
+        int cout=1;
+        while(UDP4PC->hasPendingDatagrams())
+        {
+            ba.resize(UDP4PC->pendingDatagramSize());
+            UDP4PC->readDatagram(ba.data(), ba.size());
+            if(!ba.isNull())
+               {
+                if(ba.size()==2000)
+                {
+
+                    //qDebug()<<cout;
+                    qDebug()<<ba.size();
+                    //cout+=1;
+
+                }
+                else
+                {
+                     qDebug()<<ba.size();
+                   //qDebug()<<cout;
+                   // cout=1;
+                }
+
+               }
+        }
+
+
+}
+
 bool SLAM_socket::CheckCRC(QByteArray byte)
 {
     QByteArray ByteCopy=byte;
