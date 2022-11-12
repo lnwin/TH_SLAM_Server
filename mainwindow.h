@@ -17,8 +17,8 @@ public:
     ~MainWindow();
     SLAM_socket *SLAMst;
 private slots:
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
+    void on_StartScan_clicked();
+    void on_StopScan_clicked();
 
 private:
     Ui::MainWindow *ui;

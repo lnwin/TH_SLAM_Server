@@ -20,12 +20,12 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_StartScan_clicked()
 {
-
+     SLAMst->StartSystem();
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_StopScan_clicked()
 {
-
+     SLAMst->StopSystem();
 }

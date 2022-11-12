@@ -7,13 +7,12 @@ SLAM_socket::SLAM_socket()
 {
 
     mCrc=new Crc();
-    UDP4ControlMSG=new QUdpSocket;
-    Init();
+   // Init();
 }
 
 void SLAM_socket::Init()
 {
-
+     UDP4ControlMSG=new QUdpSocket;
      UDP4ControlMSG->bind(QHostAddress("192.168.194.77"),5100);
      connect(UDP4ControlMSG,SIGNAL(readyRead()),this,SLOT(UDP4ControlMSGReadData()));
      HeartBagTimer=new QTimer();
@@ -21,12 +20,7 @@ void SLAM_socket::Init()
      HeartBagTimer->setInterval(1000);
 
 };
-void SLAM_socket:: SendMSG()
-{
 
-
-
-};
 void SLAM_socket::SendHanded()
 {
     QByteArray MSG;
@@ -42,12 +36,43 @@ void SLAM_socket::SendHanded()
 };
 void SLAM_socket::SendHeartBag()
 {
+    unique_lock<mutex>lock(sendMutex);
     QByteArray MSG;
     MSG[0]=0xaa;
     MSG[1]=0x01;
     MSG[2]=0x07;
     MSG[3]=0xbb;
     MSG[4]=0x00;
+    uint16_t wcrc=mCrc->ModbusCRC16(MSG);
+    MSG.append(uint8_t(wcrc));
+    MSG.append(uint8_t(wcrc>>8));
+    UDP4ControlMSG->writeDatagram(MSG,QHostAddress("192.168.194.7"),5200);//Jetson接收端的端口须和window的不一样5
+};
+
+
+void SLAM_socket::StartSystem()
+{
+    unique_lock<mutex>lock(sendMutex);
+    QByteArray MSG;
+    MSG[0]=0xaa;
+    MSG[1]=0x01;
+    MSG[2]=0x07;
+    MSG[3]=0xcc;
+    MSG[4]=0xaa;
+    uint16_t wcrc=mCrc->ModbusCRC16(MSG);
+    MSG.append(uint8_t(wcrc));
+    MSG.append(uint8_t(wcrc>>8));
+    UDP4ControlMSG->writeDatagram(MSG,QHostAddress("192.168.194.7"),5200);//Jetson接收端的端口须和window的不一样5
+};
+void SLAM_socket::StopSystem()
+{
+    unique_lock<mutex>lock(sendMutex);
+    QByteArray MSG;
+    MSG[0]=0xaa;
+    MSG[1]=0x01;
+    MSG[2]=0x07;
+    MSG[3]=0xcc;
+    MSG[4]=0xbb;
     uint16_t wcrc=mCrc->ModbusCRC16(MSG);
     MSG.append(uint8_t(wcrc));
     MSG.append(uint8_t(wcrc>>8));

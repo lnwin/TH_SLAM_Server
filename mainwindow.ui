@@ -37,17 +37,30 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="StartScan">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>50</y>
+      <x>580</x>
+      <y>80</y>
       <width>131</width>
       <height>71</height>
      </rect>
     </property>
     <property name="text">
-     <string>发送</string>
+     <string>开始扫描</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="StopScan">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>80</y>
+      <width>111</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>停止扫描</string>
     </property>
    </widget>
   </widget>

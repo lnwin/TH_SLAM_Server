@@ -6,6 +6,8 @@
 #include <QDebug>
 #include <Crc.h>
 #include <QTimer>
+#include <mutex>
+using namespace std;
 class SLAM_socket :public QThread
 {
     Q_OBJECT
@@ -15,7 +17,8 @@ public:
     QUdpSocket* UDP4ControlMSG;
     Crc* mCrc;
 
-    void SendMSG();
+    void StartSystem();
+    void StopSystem();
     void SendHanded();
 
 
@@ -27,6 +30,7 @@ public slots:
 private:
     bool CheckCRC(QByteArray byte);
     QTimer *HeartBagTimer;
+    mutex sendMutex;
 };
 
 #endif // SLAM_SOCKET_H
