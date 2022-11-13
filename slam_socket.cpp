@@ -125,6 +125,7 @@ void SLAM_socket::UDP4PCReadData()
                     qDebug()<<ba.size();
                     //cout+=1;
 
+
                 }
                 else
                 {
