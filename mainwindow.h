@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <slam_socket.h>
+#include <pclviwer.h>
 #include <QThread>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,6 +16,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    PCLViwer *mPCLViwer;
     SLAM_socket *SLAMst;
 private slots:
     void on_StartScan_clicked();

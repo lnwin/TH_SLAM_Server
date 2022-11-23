@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    mPCLViwer=new PCLViwer();
     SLAMst = new SLAM_socket();
     UPDThread=new QThread;
     SLAMst->moveToThread(UPDThread);
