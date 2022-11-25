@@ -36,11 +36,8 @@ PCLViwer::PCLViwer(Ui::MainWindow ui)
         if (pcl::io::loadPCDFile("C:/Users/Administrator/Desktop/bunny.pcd", *cloud_in) < 0)
         {
             PCL_ERROR("\a->点云文件不存在！\n");
-           // system("pause");
         }
         cout << "->加载了 " << cloud_in->points.size() << " 个数据点" << endl;
-//        pcl::PointCloud<PointT>::Ptr cloud(new pcl::PointCloud<PointT>);
-//            string pathData = "../data/underWater.pcd";
         QVTKOpenGLWidget *qvtk=ui.openGLWidget;
         // Setup window
         vtkSmartPointer<vtkGenericOpenGLRenderWindow> renderWindow =
@@ -57,8 +54,6 @@ PCLViwer::PCLViwer(Ui::MainWindow ui)
         renderWindow->AddRenderer(renderer);
         vtkSmartPointer<vtkInteractorStyleTrackballCamera>interactorStyle = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
             interactor->SetInteractorStyle(interactorStyle);
-      //  qvtk->show();
-       // renderWindow->SetSize(70,80);
         renderWindow->Render();
         interactor->Initialize();
 
