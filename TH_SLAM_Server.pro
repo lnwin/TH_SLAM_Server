@@ -20,13 +20,73 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     pclviwer.cpp \
-    slam_socket.cpp
+    slam_socket.cpp \
+    src/Atlas.cc \
+    src/CameraModels/KannalaBrandt8.cpp \
+    src/CameraModels/Pinhole.cpp \
+    src/Config.cc \
+    src/Converter.cc \
+    src/Frame.cc \
+    src/FrameDrawer.cc \
+    src/G2oTypes.cc \
+    src/GeometricTools.cc \
+    src/ImuTypes.cc \
+    src/KeyFrame.cc \
+    src/KeyFrameDatabase.cc \
+    src/LocalMapping.cc \
+    src/LoopClosing.cc \
+    src/MLPnPsolver.cpp \
+    src/Map.cc \
+    src/MapDrawer.cc \
+    src/MapPoint.cc \
+    src/ORBextractor.cc \
+    src/ORBmatcher.cc \
+    src/OptimizableTypes.cpp \
+    src/Optimizer.cc \
+    src/Settings.cc \
+    src/Sim3Solver.cc \
+    src/System.cc \
+    src/Tracking.cc \
+    src/TwoViewReconstruction.cc \
+    src/Viewer.cc
 
 HEADERS += \
     Crc.h \
+    include/Atlas.h \
+    include/CameraModels/GeometricCamera.h \
+    include/CameraModels/KannalaBrandt8.h \
+    include/CameraModels/Pinhole.h \
+    include/Config.h \
+    include/Converter.h \
+    include/Frame.h \
+    include/FrameDrawer.h \
+    include/G2oTypes.h \
+    include/GeometricTools.h \
+    include/ImuTypes.h \
+    include/KeyFrame.h \
+    include/KeyFrameDatabase.h \
+    include/LocalMapping.h \
+    include/LoopClosing.h \
+    include/MLPnPsolver.h \
+    include/Map.h \
+    include/MapDrawer.h \
+    include/MapPoint.h \
+    include/ORBVocabulary.h \
+    include/ORBextractor.h \
+    include/ORBmatcher.h \
+    include/OptimizableTypes.h \
+    include/Optimizer.h \
+    include/SerializationUtils.h \
+    include/Settings.h \
+    include/Sim3Solver.h \
+    include/System.h \
+    include/Tracking.h \
+    include/TwoViewReconstruction.h \
+    include/Viewer.h \
     mainwindow.h \
     pclviwer.h \
-    slam_socket.h
+    slam_socket.h \
+    unistd.h
 
 FORMS += \
     mainwindow.ui
@@ -471,6 +531,32 @@ win32: LIBS += -L'C:/Program Files/PCL 1.9.1/3rdParty/VTK/lib/' -lvtkRenderingVo
 
 }
 
+INCLUDEPATH +=E:/lzy/TH_SLAM_Server/include/CameraModels
+INCLUDEPATH +=E:/lzy/TH_SLAM_Server/include
 
 
 
+
+win32:CONFIG(release, debug|release): LIBS += -LD:/opencv/opencv/build/x64/vc15/lib/ -lopencv_world3416
+else:win32:CONFIG(debug, debug|release): LIBS += -LD:/opencv/opencv/build/x64/vc15/lib/ -lopencv_world3416d
+
+INCLUDEPATH += D:/opencv/opencv/build/include
+DEPENDPATH += D:/opencv/opencv/build/include
+
+win32: LIBS += -L$$PWD/../SLAM/SLAM-LIB-WINDOWS-2017X64/Sophus/build/examples/Release/ -lHelloSO3
+
+INCLUDEPATH += $$PWD/../SLAM/SLAM-LIB-WINDOWS-2017X64/Sophus
+DEPENDPATH += $$PWD/../SLAM/SLAM-LIB-WINDOWS-2017X64/Sophus
+
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../SLAM/SLAM-LIB-WINDOWS-2017X64/Sophus/build/examples/Release/HelloSO3.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../SLAM/SLAM-LIB-WINDOWS-2017X64/Sophus/build/examples/Release/libHelloSO3.a
+
+win32: LIBS += -L$$PWD/../SLAM/SLAM-LIB-WINDOWS-2017X64/DBoW2/lib/Release/ -lDBoW2
+
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../SLAM/SLAM-LIB-WINDOWS-2017X64/DBoW2/lib/Release/DBoW2.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../SLAM/SLAM-LIB-WINDOWS-2017X64/DBoW2/lib/Release/libDBoW2.a
+
+win32: LIBS += -L$$PWD/../SLAM/SLAM-LIB-WINDOWS-2017X64/g2o/build/Release/ -lg2o
+
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../SLAM/SLAM-LIB-WINDOWS-2017X64/g2o/build/Release/g2o.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../SLAM/SLAM-LIB-WINDOWS-2017X64/g2o/build/Release/libg2o.a
